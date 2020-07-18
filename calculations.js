@@ -1,9 +1,15 @@
 const { getFixedNumber, printResults } = require('./utils');
 
-const calculations = (period, openAssets, assetsYear, growthRate, openDepreciation=0) => {
+const calculations = (
+  period,
+  openAssets,
+  assetsYear,
+  growthRate,
+  openDepreciation = 0
+) => {
   const calculationsResult = {};
   const depreciationResult = {};
-  const years = parseInt(period);
+  const years = parseFloat(period);
 
   let closingBalanceAssets = openAssets;
   let purchases = assetsYear;
@@ -13,26 +19,33 @@ const calculations = (period, openAssets, assetsYear, growthRate, openDepreciati
     const year = `YEAR ${i + 1}`;
 
     calculationsResult[year] = {
-      ['Opening Balance']: getFixedNumber(closingBalanceAssets),
-      ['add: Purchases']: getFixedNumber(purchases),
+      'Opening Balance': getFixedNumber(closingBalanceAssets),
+      'add: Purchases': getFixedNumber(purchases)
     };
     depreciationResult[year] = {
-      ['Opening Balance']: getFixedNumber(closingBalanceDepreciation),
+      'Opening Balance': getFixedNumber(closingBalanceDepreciation)
     };
 
     if (!i) {
       closingBalanceAssets += purchases;
-      closingBalanceDepreciation += getFixedNumber((openAssets + purchases) / years);
+      closingBalanceDepreciation += getFixedNumber(
+        (openAssets + purchases) / years
+      );
     } else {
-      closingBalanceDepreciation += getFixedNumber((closingBalanceAssets + purchases) / years);
+      closingBalanceDepreciation += getFixedNumber(
+        (closingBalanceAssets + purchases) / years
+      );
       closingBalanceAssets += purchases;
     }
     depreciationResult[year]['Closing Balance'] = closingBalanceDepreciation;
-    calculationsResult[year]['Closing Balance'] = getFixedNumber(closingBalanceAssets);
-    depreciationResult[year]['Net Asset Balance'] = getFixedNumber(closingBalanceAssets - closingBalanceDepreciation);
+    calculationsResult[year]['Closing Balance'] = getFixedNumber(
+      closingBalanceAssets
+    );
+    depreciationResult[year]['Net Asset Balance'] = getFixedNumber(
+      closingBalanceAssets - closingBalanceDepreciation
+    );
 
     purchases += purchases * (growthRate / 100);
-
   }
   printResults(calculationsResult, depreciationResult);
 };

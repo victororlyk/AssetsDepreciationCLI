@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 
-const getFixedNumber = number => Number(number.toFixed(0));
+const getFixedNumber = (number) => Number(number.toFixed(0));
 
 const printResults = (calculations, depreciation) => {
   console.log(chalk.green('Calculations'));
@@ -9,7 +9,7 @@ const printResults = (calculations, depreciation) => {
   console.table(depreciation);
 };
 
-module.exports ={
+module.exports = {
   getFixedNumber,
   printResults
-}
+};
